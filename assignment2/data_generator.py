@@ -22,14 +22,6 @@ for _ in range(rows1):
        row.append(pair)
     matrix1.append(row)
 
-for _ in range(rows1):
-    row = []
-    for _ in range(cols1 // 2):
-       x = random.uniform(-1000.0, +1000.0)
-       pair = (calculateY1(x), x)
-       row.append(pair)
-    matrix1.append(row)
-
 for _ in range(rows2):
     row = []
     for _ in range(cols2 // 3):
@@ -52,14 +44,26 @@ for row in matrix1:
 with open('L1.json', 'w', encoding='utf-8') as json_file:
     json.dump(matrix1, json_file, ensure_ascii=False, indent=4)
 
-with open('L1.csv', 'w') as csv_file:
+with open('L1.csv', 'w', newline='') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(['y', 'x'])
     for row in matrix1:
-        writer.writerows(row) 
+        for pair in row:
+            writer.writerow(pair)
+
+with open('Q1.csv', 'w') as csv_file:
+    writer = csv.writer(csv_file)
+    writer.writerow(['y', 'x'])
+
+    for row in matrix2:
+        for y, x1, x2 in row:
+            original_x = x1 * 2
+            writer.writerow([y, original_x])
 
 with open('Q2.csv', 'w') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(['y', 'x1', 'x2'])
+
     for row in matrix2:
-        writer.writerows(row) 
+        for y, x1, x2 in row:
+            writer.writerow([y, x1, x2])
