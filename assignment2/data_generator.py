@@ -2,68 +2,51 @@ import random
 import json
 import csv
 
-# TODO: Create 2D array to store 100,000,000 pairs
-rows1, cols1 = 2, 10
-rows2, cols2 = 2, 10
-matrix1 = [] # first matrix
-matrix2 = [] # second matrix
+num_pairs = 15
 
-def calculateY1(x):
-  return 2.0 + (0.5 * x)
+matrix1 = []
+matrix2 = []
 
-def calculateY2(x):
-  return 2.0 + (0.5 * x) - (3 * (pow(x, 2)))
+def calculate_y1(x):
+    return 2.0 + (0.5 * x)
 
-for _ in range(rows1):
-    row = []
-    for _ in range(cols1 // 2):
-       x = random.uniform(-1000.0, +1000.0)
-       pair = (calculateY1(x), x)
-       row.append(pair)
-    matrix1.append(row)
+def calculate_y2(x):
+    return 2.0 + (0.5 * x) - (3 * (x ** 2))
 
-for _ in range(rows2):
-    row = []
-    for _ in range(cols2 // 3):
-       x = random.uniform(-1000.0, +1000.0)
-       values = (calculateY2(x), 0.5 * x, -3 * (pow(x, 2)))
-       row.append(values)
-    matrix2.append(row)
+for _ in range(num_pairs):
+    x = random.uniform(-10.0, 10.0)
+    y = calculate_y1(x)
+    matrix1.append((y, x))
 
-print(matrix2)
 
-# start, end = 0, len(matrix1) - 1
-# mid = (start + end) // 2
-# print("First Pair", matrix1[start][start])
-# print("Middle Pair",matrix1[mid][mid])
-# print("Last Pair", matrix1[end][end])
+for _ in range(num_pairs):
+    x = random.uniform(-10.0, 10.0)
+    y = calculate_y2(x)
+    x1 = 0.5 * x
+    x2 = -3 * (x ** 2)
+    matrix2.append((y, x1, x2))
 
-for row in matrix1:
-    row.sort(key=lambda pair: pair[0], reverse=True)
+matrix1.sort(key=lambda pair: pair[0], reverse=True)
 
 with open('L1.json', 'w', encoding='utf-8') as json_file:
-    json.dump(matrix1, json_file, ensure_ascii=False, indent=4)
+    json.dump({"linear": matrix1}, json_file, ensure_ascii=False, indent=4)
+
 
 with open('L1.csv', 'w', newline='') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(['y', 'x'])
-    for row in matrix1:
-        for pair in row:
-            writer.writerow(pair)
+    writer.writerows(matrix1)
 
-with open('Q1.csv', 'w') as csv_file:
+
+with open('Q1.csv', 'w', newline='') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(['y', 'x'])
+    for y, x1, x2 in matrix2:
+        original_x = x1 * 2 
+        writer.writerow([y, original_x])
 
-    for row in matrix2:
-        for y, x1, x2 in row:
-            original_x = x1 * 2
-            writer.writerow([y, original_x])
 
-with open('Q2.csv', 'w') as csv_file:
+with open('Q2.csv', 'w', newline='') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(['y', 'x1', 'x2'])
-
-    for row in matrix2:
-        for y, x1, x2 in row:
-            writer.writerow([y, x1, x2])
+    writer.writerows(matrix2)
