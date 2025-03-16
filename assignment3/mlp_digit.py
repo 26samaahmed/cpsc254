@@ -37,4 +37,7 @@ print(f'KNN Accuracy: {knn_accuracy:.2f}')
 print("KNN Classification Report:\n", knn_confusion_matrix)
 
 print(f'MLP Accuracy: {accuracy:.2f} | KNN Accuracy: {knn_accuracy:.2f}')
-print('KNN Accuracy is more accurate than MLP Accuracy')
+if accuracy > knn_accuracy:
+    print("MLP outperforms KNN")
+else:
+    print("KNN outperforms MLP")
