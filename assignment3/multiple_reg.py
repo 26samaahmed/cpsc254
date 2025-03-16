@@ -48,8 +48,8 @@ for name, coef in zip(feature_names, coefficients):
     print(f"{name}: {coef:.4f}")
 
 
-value_x1 = float(random.randint(0, 1000))
-value_x2 = float(random.randint(0, 1000))
+value_x1 = float(random.randint(-1000, 1000))
+value_x2 = float(random.randint(-1000, 1000))
 
 def predict_polynomial_value(model, poly, value_x1, value_x2):
     transformed_input = poly.transform(pd.DataFrame([[value_x1, value_x2]], columns=['x1', 'x2']))
