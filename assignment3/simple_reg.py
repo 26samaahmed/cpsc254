@@ -36,7 +36,31 @@ def display_coef(X, Y):
   model = LinearRegression().fit(X_poly, Y)
   return model.coef_
 
+def compute_total_error(X, Y):
+  model = LinearRegression().fit(X, Y)
+  Y_pred = model.predict(X)
+  return np.sum((Y - Y_pred))
 
-print("Predicted value of Y for X = 100: ", predict_linear_value(X1, Y1, 100))
-print("Coefficients of the linear regression model for X2 and Y2: ", display_coef(X2, Y2))
-print("Predicted value of Y for X = 0.5: ", predict_polynomial_value(X2, Y2, 0.5))
+
+def compute_sum_error_squared(X, Y):
+  model = LinearRegression().fit(X, Y)
+  Y_pred = model.predict(X)
+  return np.sum((Y - Y_pred) ** 2)
+
+def compute_mean_square_error(X, Y):
+  res = compute_sum_error_squared(X, Y)
+  return res / len(X) 
+
+def compute_root_mean_square_error(X, Y):
+  res = compute_mean_square_error(X, Y)
+  return np.sqrt(res)
+
+if __name__ == "__main__":
+    print("Predicted value of Y for X = 100: ", predict_linear_value(X1, Y1, 100))
+    print("Coefficients of the linear regression model for X2 and Y2: ", display_coef(X2, Y2))
+    print("Predicted value of Y for X = 0.5: ", predict_polynomial_value(X2, Y2))
+
+    print("Total Error for X1 and Y1: ", compute_total_error(X1, Y1))
+    print("Sum of Squared Errors for X1 and Y1: ", compute_sum_error_squared(X1, Y1))
+    print("Mean Square Error for X1 and Y1: ", compute_mean_square_error(X1, Y1))
+    print("Root Mean Square Error for X1 and Y1: ", compute_root_mean_square_error(X1, Y1))
