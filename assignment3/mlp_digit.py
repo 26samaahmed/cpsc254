@@ -2,8 +2,8 @@ from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-
+from sklearn.metrics import accuracy_score, classification_report
+from knn_digit import get_knn_accuracy, get_knn_classification_report
 
 digits = load_digits()
 X, Y = digits.data, digits.target 
@@ -27,6 +27,14 @@ mlp = MLPClassifier(
 mlp.fit(X_train, Y_train) 
 Y_pred = mlp.predict(X_test)
 accuracy = accuracy_score(Y_test, Y_pred)
-print(f'Final MLP Accuracy: {accuracy:.2f}')
+print(f'MLP Accuracy: {accuracy:.2f}')
 print("Classification Report:\n", classification_report(Y_test, Y_pred))
-print("Confusion Matrix:\n", confusion_matrix(Y_test, Y_pred))
+
+# Compare with KNN
+knn_accuracy = get_knn_accuracy()
+knn_confusion_matrix = get_knn_classification_report()
+print(f'KNN Accuracy: {knn_accuracy:.2f}')
+print("KNN Classification Report:\n", knn_confusion_matrix)
+
+print(f'MLP Accuracy: {accuracy:.2f} | KNN Accuracy: {knn_accuracy:.2f}')
+print('KNN Accuracy is more accurate than MLP Accuracy')

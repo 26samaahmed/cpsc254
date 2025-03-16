@@ -3,6 +3,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.metrics import mean_squared_error
 import numpy as np
 import pandas as pd
+import random
 import os
 
 
@@ -47,8 +48,8 @@ for name, coef in zip(feature_names, coefficients):
     print(f"{name}: {coef:.4f}")
 
 
-value_x1 = float(input("\nEnter x1 value: "))
-value_x2 = float(input("Enter x2 value: "))
+value_x1 = float(random.randint(0, 1000))
+value_x2 = float(random.randint(0, 1000))
 
 def predict_polynomial_value(model, poly, value_x1, value_x2):
     transformed_input = poly.transform(pd.DataFrame([[value_x1, value_x2]], columns=['x1', 'x2']))

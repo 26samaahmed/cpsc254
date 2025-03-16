@@ -23,7 +23,6 @@ def find_beta(X, Y):
 
 beta = find_beta(X_bias, Y)
 
-
 equation_terms = []
 for i in range(len(beta)):
     if i == 0:
