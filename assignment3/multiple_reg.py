@@ -23,16 +23,30 @@ def train_polynomial_regression(X, Y, degree=2):
 
 model, poly, X_poly = train_polynomial_regression(X, Y)
 
-# Display Coefficients
+# Extract coefficients and feature names
+coefficients = model.coef_
+feature_names = poly.get_feature_names_out(['x1', 'x2'])
+
+# Construct the polynomial equation
+equation_terms = []
+for i in range(len(coefficients)):
+    if coefficients[i] != 0:
+        term = f"{coefficients[i]:.4f}"
+        if feature_names[i] != "1":
+            term += f" * {feature_names[i]}"
+        equation_terms.append(term)
+
+polynomial_equation = " + ".join(equation_terms)
+
+
+print("\nPolynomial Equation:")
+print(f"y = {polynomial_equation}")
+
 print("\nCoefficients:")
-print(model.coef_)
+for name, coef in zip(feature_names, coefficients):
+    print(f"{name}: {coef:.4f}")
 
-# Compute the RMSE
-Y_pred = model.predict(X_poly)
-rmse = np.sqrt(mean_squared_error(Y, Y_pred))
-print(f"\nRoot Mean Square Error (RMSE): {rmse:.4f}")
 
-# User Input for Prediction
 value_x1 = float(input("\nEnter x1 value: "))
 value_x2 = float(input("Enter x2 value: "))
 
@@ -42,3 +56,7 @@ def predict_polynomial_value(model, poly, value_x1, value_x2):
 
 predicted_y = predict_polynomial_value(model, poly, value_x1, value_x2)
 print(f"\nPredicted y value for (x1={value_x1}, x2={value_x2}): {predicted_y:.2f}")
+
+Y_pred = model.predict(X_poly)
+rmse = np.sqrt(mean_squared_error(Y, Y_pred))
+print(f"\nRoot Mean Square Error (RMSE): {rmse:.4f}")
